@@ -11,6 +11,7 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 
 import { BrandComponent } from './brand/brand.component';
+import { CustomerComponent } from './customer/customer.component';
 import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
@@ -26,7 +27,8 @@ import { NgxPrintModule} from 'ngx-print';
         HomeComponent,
         CounterComponent,
         FetchDataComponent,
-        BrandComponent
+        BrandComponent,
+        CustomerComponent
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -41,6 +43,7 @@ import { NgxPrintModule} from 'ngx-print';
             { path: '', component: HomeComponent, pathMatch: 'full' },
             { path: 'counter', component: CounterComponent },
             { path: 'brand', component: BrandComponent },
+            { path: 'customer', component: CustomerComponent },
             { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
         ])
     ],
