@@ -19,7 +19,17 @@ import { AuthorizeInterceptor } from 'src/api-authorization/authorize.intercepto
 import { ToastrModule } from 'ng6-toastr-notifications';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxPaginationModule} from 'ngx-pagination';
-import { NgxPrintModule} from 'ngx-print';
+import { NgxPrintModule } from 'ngx-print';
+
+import { MatButtonModule } from '@angular/material/button';
+
+import {MatDatepickerModule} from '@angular/material/datepicker';
+
+
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatNativeDateModule } from '@angular/material/core';
+
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
     declarations: [
@@ -40,6 +50,11 @@ import { NgxPrintModule} from 'ngx-print';
         BrowserAnimationsModule,
         NgxPaginationModule,
         NgxPrintModule,
+        MatFormFieldModule,
+        MatNativeDateModule,
+        MatButtonModule,
+        MatDatepickerModule,
+        MatInputModule,
         ToastrModule.forRoot(),
         RouterModule.forRoot([
             { path: '', component: HomeComponent, pathMatch: 'full' },
