@@ -15,6 +15,7 @@ import { CustomerComponent } from './customer/customer.component';
 import { SizesComponent } from './sizes/sizes.component';
 import { CategoryComponent } from './category/category.component';
 import { SuppliersComponent } from './suppliers/suppliers.component';
+import { SubCategoryComponent } from './subcategory/subcategory.component';
 import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
@@ -32,6 +33,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 
 import {MatInputModule} from '@angular/material/input';
+import { MaterialModule } from './material/material.component';
+
 
 @NgModule({
     declarations: [
@@ -44,7 +47,8 @@ import {MatInputModule} from '@angular/material/input';
         CustomerComponent,
         SizesComponent,
         CategoryComponent,
-        SuppliersComponent
+        SuppliersComponent,
+        SubCategoryComponent
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -58,6 +62,7 @@ import {MatInputModule} from '@angular/material/input';
         MatNativeDateModule,
         MatButtonModule,
         MatDatepickerModule,
+        MaterialModule,
         MatInputModule,
         ToastrModule.forRoot(),
         RouterModule.forRoot([
@@ -66,8 +71,9 @@ import {MatInputModule} from '@angular/material/input';
             { path: 'brand', component: BrandComponent },
             { path: 'customer', component: CustomerComponent },
             { path: 'sizes', component: SizesComponent },
-            { path: 'sizes', component: CategoryComponent },
-            { path: 'sizes', component: SuppliersComponent },
+            { path: 'category', component: CategoryComponent },
+            { path: 'suppliers', component: SuppliersComponent },
+            { path: 'subcategory', component: SubCategoryComponent },
             { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
         ])
     ],

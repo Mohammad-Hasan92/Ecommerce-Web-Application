@@ -6,17 +6,18 @@ import { isNullOrUndefined } from 'util';
 declare var $: any;
 
 @Component({
-    selector: 'app-category',
-    templateUrl: './category.component.html'
+    selector: 'app-subcategory',
+    templateUrl: './subcategory.component.html'
 })
-export class CategoryComponent {
+export class SubCategoryComponent {
+    public SubCategoryList: SubCategory[];
     public CategoryList: Category[];
 
 
     public Http: HttpClient;
     public BaseUrl: string;
     public Toastr: ToastrManager;
-    public Category: Category;
+    public SubCategory: SubCategory;
     public photoPreview: string | ArrayBuffer;
 
 
@@ -33,73 +34,84 @@ export class CategoryComponent {
 
     public LoadList() {
 
+        this.Http.get<SubCategory[]>(this.BaseUrl + 'api/SubCategories')
+            .subscribe(result => {
+                this.SubCategoryList = result;
+            }, error => this.Toastr.errorToastr(error, "Error"));
+        this.LoadCategoryList();
+
+    }
+
+
+    public LoadCategoryList() {
+
         this.Http.get<Category[]>(this.BaseUrl + 'api/Categories')
             .subscribe(result => {
                 this.CategoryList = result;
             }, error => this.Toastr.errorToastr(error, "Error"));
-
-
     }
+
+
 
     public Cancel(form: NgForm) {
 
         if (form != null)
             form.resetForm();
 
-        this.Category = new Category();
+        this.SubCategory = new SubCategory();
         this.photoPreview = null;
     }
     onFileChanged(event) {
-        this.Category.Upload = event.target.files[0];
+        this.SubCategory.Upload = event.target.files[0];
         this.preview();
     }
 
     preview() {
         // Show preview 
-        var mimeType = this.Category.Upload.type;
+        var mimeType = this.SubCategory.Upload.type;
         if (mimeType.match(/image\/*/) == null) {
             return;
         }
 
         var reader = new FileReader();
-        reader.readAsDataURL(this.Category.Upload);
+        reader.readAsDataURL(this.SubCategory.Upload);
         reader.onload = (_event) => {
             this.photoPreview = reader.result;
         }
     }
 
 
-    public SubmitCategory(form: NgForm) {
+    public SubmitSubCategory(form: NgForm) {
 
 
-        if (this.Category.CatId == 0) {
-            this.CreateCategory(form);
+        if (this.SubCategory.SubCatId == 0) {
+            this.CreateSubCategory(form);
         }
         else {
-            this.UpdateCategory(form);
+            this.UpdateSubCategory(form);
         }
     }
 
-    CreateCategory(form: NgForm) {
+    CreateSubCategory(form: NgForm) {
 
-        this.Http.post<Category>(this.BaseUrl + 'api/Categories', this.Category)
+        this.Http.post<SubCategory>(this.BaseUrl + 'api/SubCategories', this.SubCategory)
             .subscribe(result => {
                 this.LoadList();
                 this.Cancel(form);
                 $('#CategoryModal').modal('hide');
-                this.Toastr.successToastr(result.CategoryName + ' create successfully', "Success");
+                this.Toastr.successToastr(result.SubCategoryName + ' create successfully', "Success");
 
             }, error => this.Toastr.errorToastr(error, "Error"));
     }
 
 
-    UpdateCategory(form: NgForm) {
+    UpdateSubCategory(form: NgForm) {
 
 
 
-        this.Http.put(this.BaseUrl + 'api/Categories/' + this.Category.CatId, this.Category)
+        this.Http.put(this.BaseUrl + 'api/SubCategories/' + this.SubCategory.SubCatId, this.SubCategory)
             .subscribe(result => {
-                let name = this.Category.CategoryName;
+                let name = this.SubCategory.SubCategoryName;
                 this.LoadList();
                 this.Cancel(form);
                 $('#CategoryModal').modal('hide');
@@ -109,9 +121,9 @@ export class CategoryComponent {
 
     public GetCategory(id: number) {
 
-        this.Http.get<Category>(this.BaseUrl + 'api/Categories/' + id)
+        this.Http.get<SubCategory>(this.BaseUrl + 'api/SubCategories/' + id)
             .subscribe(result => {
-                this.Category = result;
+                this.SubCategory = result;
                 $('#CategoryModal').modal('show');
             }, error => this.Toastr.errorToastr(error, "Error"));
 
@@ -119,9 +131,9 @@ export class CategoryComponent {
 
 
 
-    public DeleteConfirmation(p: Category) {
+    public DeleteConfirmation(p: SubCategory) {
 
-        this.Category = p;
+        this.SubCategory = p;
         $('#deleteModal').modal('show');
 
     }
@@ -129,23 +141,29 @@ export class CategoryComponent {
 
     public DeleteCategory(id: number) {
 
-        this.Http.delete<Category>(this.BaseUrl + 'api/Categories/' + id)
+        this.Http.delete<SubCategory>(this.BaseUrl + 'api/SubCategories/' + id)
             .subscribe(result => {
                 this.LoadList();
                 $('#deleteModal').modal('hide');
-                this.Toastr.successToastr(result.CategoryName + ' deleted successfully', "Success");
+                this.Toastr.successToastr(result.SubCategoryName + ' deleted successfully', "Success");
             }, error => this.Toastr.errorToastr(error, "Error"));
 
     }
 }
 
 
-class Category {
-    CatId: number = 0;
-    CategoryName: string;
-    RecordDate: Date;
+class SubCategory {
+    SubCatId: number = 0;
+    SubCategoryName: string;
     public Image: string = "";
     public Upload: File;
+    public CatId: number;
 
+
+}
+
+interface Category {
+    CatId: number;
+    CategoryName: string;
 
 }
