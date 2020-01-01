@@ -13,6 +13,8 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { BrandComponent } from './brand/brand.component';
 import { CustomerComponent } from './customer/customer.component';
 import { SizesComponent } from './sizes/sizes.component';
+import { CategoryComponent } from './category/category.component';
+import { SuppliersComponent } from './suppliers/suppliers.component';
 import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
@@ -40,7 +42,9 @@ import {MatInputModule} from '@angular/material/input';
         FetchDataComponent,
         BrandComponent,
         CustomerComponent,
-        SizesComponent
+        SizesComponent,
+        CategoryComponent,
+        SuppliersComponent
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -62,6 +66,8 @@ import {MatInputModule} from '@angular/material/input';
             { path: 'brand', component: BrandComponent },
             { path: 'customer', component: CustomerComponent },
             { path: 'sizes', component: SizesComponent },
+            { path: 'sizes', component: CategoryComponent },
+            { path: 'sizes', component: SuppliersComponent },
             { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
         ])
     ],
