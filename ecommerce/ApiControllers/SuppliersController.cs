@@ -28,8 +28,6 @@ namespace ecommerce.ApiControllers
         {
 
 
-
-
             int[] a = { };
             var data = await _context.Suppliers.Select(m =>
             new BrandSuppliersViewModel(m,
@@ -64,18 +62,40 @@ namespace ecommerce.ApiControllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSuppliers(int id, Suppliers suppliers)
+        public async Task<IActionResult> PutSuppliers(int id, BrandSuppliersViewModel suppliersVM)
         {
-            if (id != suppliers.SupplierId)
+            if (id != suppliersVM.SupplierId)
             {
                 return BadRequest();
             }
-
-            _context.Entry(suppliers).State = EntityState.Modified;
-
             try
             {
+                Suppliers suppliers = _context.Suppliers.Find(suppliersVM.SupplierId);
+
+                suppliers.SupplierId = suppliersVM.SupplierId;
+                suppliers.SupplierName = suppliersVM.SupplierName;
+                suppliers.Address = suppliersVM.Address;
+                suppliers.ContactNumber = suppliersVM.ContactNumber;
+                suppliers.RecordDate = suppliersVM.RecordDate;
+
+
+                _context.Entry(suppliers).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
+
+
+                _context.BrandSuppliers.RemoveRange(_context.BrandSuppliers.Where(p => p.SupplierId == suppliers.SupplierId));
+                await _context.SaveChangesAsync();
+
+                foreach (int item in suppliersVM.Brands)
+                {
+                    BrandSuppliers BS = new BrandSuppliers();
+                    BS.SupplierId = suppliers.SupplierId;
+                    BS.BrandId = item;
+                    _context.BrandSuppliers.Add(BS);
+                    await _context.SaveChangesAsync();
+
+                }
+
             }
             catch (DbUpdateConcurrencyException)
             {
