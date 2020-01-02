@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ecommerce.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -6,9 +7,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ecommerce.Models
+namespace ecommerce.ViewModels
 {
-    public class Suppliers
+    public class BrandSuppliersViewModel
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -31,8 +32,29 @@ namespace ecommerce.Models
         public DateTime RecordDate { get; set; } = DateTime.Now;
         public Guid UniqueId { get; set; } = Guid.NewGuid();
 
-    
+        public int[] Brands { get; set; }
+        public string BrandNames { get; set; }
 
-        public ICollection<BrandSuppliers> BrandSuppliers { get; set; }
+        public virtual ICollection<BrandSuppliers> BrandSuppliers { get; set; }
+
+
+
+        public BrandSuppliersViewModel()
+        {
+
+        }
+         public BrandSuppliersViewModel(Suppliers suppliers, int[] brands, string[] brandNames)
+        {
+            this.SupplierId = suppliers.SupplierId;
+            this.SupplierName = suppliers.SupplierName;
+            this.Address = suppliers.Address;
+            this.ContactNumber = suppliers.ContactNumber;
+            this.UniqueId = suppliers.UniqueId;
+            this.Brands = brands;
+            this.BrandNames = string.Join(", ",brandNames);
+        }
+
+
+
     }
 }

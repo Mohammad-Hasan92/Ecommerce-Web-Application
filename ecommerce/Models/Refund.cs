@@ -17,7 +17,7 @@ namespace ecommerce.Models
         [ForeignKey("Customers")]
         public int CustomerId { get; set; }
 
-        //[ForeignKey("OrdersDetails")]
+        [ForeignKey("OrdersDetails")]
         public int OrderDetailsId { get; set; }
 
 

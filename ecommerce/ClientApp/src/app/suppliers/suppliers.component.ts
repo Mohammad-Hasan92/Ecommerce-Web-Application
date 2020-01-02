@@ -11,6 +11,9 @@ declare var $: any;
 })
 export class SuppliersComponent {
     public SuppliersList: Suppliers[];
+    public BrandList: Brand[];
+
+ 
 
 
     public Http: HttpClient;
@@ -29,17 +32,25 @@ export class SuppliersComponent {
         this.Toastr.successToastr(' Data loaded successfully', "Success");
         this.Cancel(null);
     }
-
-
     public LoadList() {
 
         this.Http.get<Suppliers[]>(this.BaseUrl + 'api/Suppliers')
             .subscribe(result => {
                 this.SuppliersList = result;
             }, error => this.Toastr.errorToastr(error, "Error"));
-
-
+        this.LoadBrandList();
+        
     }
+
+    public LoadBrandList() {
+
+        this.Http.get<Brand[]>(this.BaseUrl + 'api/Brands')
+            .subscribe(result => {
+                this.BrandList = result;
+            }, error => this.Toastr.errorToastr(error, "Error"));
+    }
+
+
 
     public Cancel(form: NgForm) {
        
@@ -126,7 +137,17 @@ class Suppliers {
     SupplierName: string;
     Address: string;
     ContactNumber: string;
+    Brands: number[];
+    BrandNames: string;
     RecordDate: Date;
-
-
 }
+
+class Brand {
+
+    BrandId: number = 0;
+    BrandName: string;
+}
+
+
+
+

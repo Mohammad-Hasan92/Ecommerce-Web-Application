@@ -32,15 +32,16 @@ namespace ecommerce.Controllers
             return await _roleManager.FindByIdAsync(id);
         }
 
-
-
-
         [HttpPost]
         public async Task<ActionResult<ApplicationRole>> CreateRole(ApplicationRole role)
         {
             await _roleManager.CreateAsync(role);
             return CreatedAtAction("GetRole", new { id = role.Id }, role);
         }
+
+
+
+        
 
     }
 }

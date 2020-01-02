@@ -26,7 +26,7 @@
         <th>Supplier Name</th>
         <th>Address</th>
         <th>Mobile</th>
-        <th>Date</th>
+        <th>Brands</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -36,7 +36,7 @@
         <td>{{ p.SupplierName }}</td>
         <td>{{ p.Address }}</td>
         <td>{{ p.ContactNumber }}</td>
-        <td>{{ p.RecordDate }}</td>
+        <td>{{ p.BrandNames }}</td>
         <td class="btn-group">
           <button class="btn btn-primary" (click)="GetSuppliers(p.SupplierId)">Edit</button>
           <button class="btn btn-danger" (click)="DeleteConfirmation(p)">Delete</button>
@@ -49,7 +49,7 @@
     <tfoot>
       <tr>
         <td colspan="6" class="text-right">
-          <pagination-controls (pageChange)="p =$event"></pagination-controls>
+          <pagination-controls  (pageChange)="p =$event"></pagination-controls>
         </td>
       </tr>
     </tfoot>
@@ -69,7 +69,7 @@
       </div>
       <div class="modal-body">
         <input type="hidden" [(ngModel)]="Suppliers.SupplierId" name="SupplierId"
-                 #SupplierId="ngModel"  />
+               #SupplierId="ngModel" />
 
         <div class="form-group">
           <label>Supplier Name</label>
@@ -87,11 +87,21 @@
                  #ContactNumber="ngModel" [ngClass]="{ 'is-invalid': form.submitted &&  ContactNumber.invalid }" required />
         </div>
 
-        <!--<div class="form-group">
-          <label>Date</label>
-          <input type="date" class=" form-control" [(ngModel)]="Brand.RecordDate" name="RecordDate"
-                 #RecordDate="ngModel" [ngClass]="{ 'is-invalid': form.submitted && RecordDate.invalid }" required />
-        </div>-->
+        <div class="form-group">
+          <label>Brand</label>
+          <select class=" form-control" [(ngModel)]="Suppliers.Brands" name="Brands"
+                  #Brands="ngModel" [ngClass]="{ 'is-invalid': form.submitted && Brands.invalid }" required multiple>
+
+            <option value="undefined">
+              Please select Value
+            </option>
+            <option *ngFor="let Brand of BrandList" [ngValue]="Brand.BrandId">
+              {{Brand.BrandName}}
+            </option>
+          </select>
+
+        </div>
+
 
       </div>
       <div class="modal-footer">
