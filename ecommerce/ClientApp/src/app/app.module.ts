@@ -16,6 +16,10 @@ import { SizesComponent } from './sizes/sizes.component';
 import { CategoryComponent } from './category/category.component';
 import { SuppliersComponent } from './suppliers/suppliers.component';
 import { SubCategoryComponent } from './subcategory/subcategory.component';
+import { ProductsComponent } from './products/products.component';
+import { WishListComponent } from './wishlist/wishlist.component';
+import { StocksComponent } from './stocks/stocks.component';
+import { CommentsComponent } from './comments/comments.component';
 import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
@@ -36,6 +40,10 @@ import {MatInputModule} from '@angular/material/input';
 import { MaterialModule } from './material/material.component';
 
 
+
+
+
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -48,7 +56,11 @@ import { MaterialModule } from './material/material.component';
         SizesComponent,
         CategoryComponent,
         SuppliersComponent,
-        SubCategoryComponent
+        SubCategoryComponent,
+        ProductsComponent,
+        WishListComponent,
+        StocksComponent,
+        CommentsComponent
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -74,6 +86,10 @@ import { MaterialModule } from './material/material.component';
             { path: 'category', component: CategoryComponent },
             { path: 'suppliers', component: SuppliersComponent },
             { path: 'subcategory', component: SubCategoryComponent },
+            { path: 'products', component: ProductsComponent },
+            { path: 'wishlist', component: WishListComponent },
+            { path: 'stocks', component: StocksComponent },
+            { path: 'comments', component: CommentsComponent },
             { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
         ])
     ],

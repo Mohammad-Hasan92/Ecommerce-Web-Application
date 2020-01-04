@@ -1,0 +1,155 @@
+<h1 id="tableLabel">Products Index</h1>
+
+
+
+<p *ngIf="!SubCategoryList"><em class="text-info">Loading...</em></p>
+
+<div class="btn-group">
+  <button class="btn btn-primary" (click)="LoadList()">
+    Refresh
+  </button>
+
+  <button type="button" data-toggle="modal" data-target="#ProductsModal" class="btn btn-success">
+    Create New
+  </button>
+  <button type="button" [useExistingCss]="true" styleSheetFile="style.css" class="btn btn-info" printSectionId="print-section"  ngxPrint>
+  Print
+  </button>
+</div>
+
+
+<div id="print-section">
+  <table id="" class="table table-striped table-bordered dt-responsive nowrap" aria-labelledby="tableLabel" *ngIf="ProductsList">
+    <thead>
+      <tr>
+        <th>Product Id</th>
+        <th>Products Name</th>
+        <th>SubCategory Id</th>
+        <th>Brand Id</th>
+        <th>Image</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of ProductsList | paginate: {itemsPerPage: 10, currentPage: p}">
+        <td>{{ p.ProductId }}</td>
+        <td>{{ p.ProductName }}</td>
+        <td>{{ p.SubCatId }}</td>
+        <td>{{ p.BrandId }}</td>
+        <td>{{ p.Image }}</td>
+        
+        <td class="btn-group">
+          <button class="btn btn-primary" (click)="GetProducts(p.ProductId)">Edit</button>
+          <button class="btn btn-danger" (click)="DeleteConfirmation(p)">Delete</button>
+        </td>
+      </tr>
+      <tr *ngIf="ProductsList.Count == 0">
+        <th colspan="4" class="text-center text-warning">No data available</th>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="6" class="text-right">
+          <pagination-controls (pageChange)="p =$event"></pagination-controls>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="ProductsModal" tabindex="-1" role="dialog" aria-labelledby="ProductsModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form class="modal-content" #form="ngForm" (ngSubmit)="form.form.valid && SubmitProducts(form)" autocomplete="off" enctype="multipart/form-data">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ProductsModalLabel">New Product</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" [(ngModel)]="Products.ProductId" name="ProductId"
+               #ProductId="ngModel" />
+
+        <div class="form-group">
+          <label>Product Name</label>
+          <input type="text" class=" form-control" [(ngModel)]="Products.ProductName" name="ProductName"
+                 #ProductName="ngModel" [ngClass]="{ 'is-invalid': form.submitted &&  ProductName.invalid }" required />
+        </div>
+        <div class="form-group">
+          <figure>
+            <div class="img-thumbnail mb-3 " *ngIf="photoPreview">
+              <img [src]="photoPreview" width="300" class="text-center" style="margin: 0  auto" />
+            </div>
+            <figcaption>
+              <label>Photo</label>
+              <input type="file" class=" form-control" [(ngModel)]="Products.Upload" name="Upload"
+                     #Upload="ngModel" (change)="onFileChanged($event)" />
+            </figcaption>
+          </figure>
+
+
+        </div>
+
+        <div class="form-group">
+          <label>Sub Category</label>
+          <select class=" form-control" [(ngModel)]="Products.SubCatId" name="SubCatId"
+                  #SubCatId="ngModel" [ngClass]="{ 'is-invalid': form.submitted && SubCatId.invalid }" required>
+
+            <option value="undefined">
+              Please select Value
+            </option>
+            <option *ngFor="let SubCategory of SubCategoryList" [ngValue]="SubCategory.SubCatId">
+              {{SubCategory.SubCategoryName}}
+            </option>
+          </select>
+
+        </div>
+
+        <div class="form-group">
+          <label>Brand</label>
+          <select class=" form-control" [(ngModel)]="Products.BrandId" name="BrandId"
+                  #BrandId="ngModel" [ngClass]="{ 'is-invalid': form.submitted && BrandId.invalid }" required>
+
+            <option value="undefined">
+              Please select Value
+            </option>
+            <option *ngFor="let Brand of BrandList" [ngValue]="Brand.BrandId">
+              {{Brand.BrandName}}
+            </option>
+          </select>
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="Cancel(form)">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="ProductsModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ProductsModalLabel">Confirm delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <span class="h2 text-warning">Delete {{Products.ProductName}}?</span>
+      </div>
+      <div class="modal-footer btn-group">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary" (click)="DeleteProducts(Products.ProductId)">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+

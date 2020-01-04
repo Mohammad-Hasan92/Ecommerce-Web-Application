@@ -21,52 +21,46 @@
       >
         <app-login-menu></app-login-menu>
         <ul class="navbar-nav flex-grow">
-          <li
-            class="nav-item"
-            [routerLinkActive]="['link-active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
+          <li class="nav-item"
+              [routerLinkActive]="['link-active']"
+              [routerLinkActiveOptions]="{ exact: true }">
             <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
           </li>
+          <!--<li class="nav-item" [routerLinkActive]="['link-active']">
+    <a class="nav-link text-dark" [routerLink]="['/counter']">Counter</a>
+  </li>
+  <li class="nav-item" [routerLinkActive]="['link-active']">
+    <a class="nav-link text-dark" [routerLink]="['/fetch-data']">Fetch data</a>
+  </li>-->
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']"
-              >Counter</a
-            >
+            <a class="nav-link text-dark" [routerLink]="['/brand']">Brand</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
-              >Fetch data</a
-            >
+            <a class="nav-link text-dark" [routerLink]="['/customer']">Customer</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/brand']"
-              >Brand</a
-            >
+            <a class="nav-link text-dark" [routerLink]="['/sizes']">Sizes</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/customer']"
-              >Customer</a
-            >
+            <a class="nav-link text-dark" [routerLink]="['/category']">Category</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/sizes']"
-              >Sizes</a
-            >
+            <a class="nav-link text-dark" [routerLink]="['/suppliers']">Suppliers</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/category']"
-              >Category</a
-            >
+            <a class="nav-link text-dark" [routerLink]="['/subcategory']">Sub Category</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/suppliers']"
-              >Suppliers</a
-            >
+            <a class="nav-link text-dark" [routerLink]="['/products']">Products</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/subcategory']"
-              >Sub Category</a
-            >
+            <a class="nav-link text-dark" [routerLink]="['/wishlist']">WishList</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/stocks']">Stocks</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/comments']">Comments</a>
           </li>
         </ul>
       </div>

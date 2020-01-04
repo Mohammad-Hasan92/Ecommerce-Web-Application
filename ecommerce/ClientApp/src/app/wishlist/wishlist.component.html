@@ -1,0 +1,131 @@
+<h1 id="tableLabel">WishList Index</h1>
+
+
+
+<p *ngIf="!WishListed"><em class="text-info">Loading...</em></p>
+
+<div class="btn-group">
+  <button class="btn btn-primary" (click)="LoadList()">
+    Refresh
+  </button>
+
+  <button type="button" data-toggle="modal" data-target="#WishListModal" class="btn btn-success">
+    Create New
+  </button>
+  <button type="button" [useExistingCss]="true" styleSheetFile="style.css" class="btn btn-info" printSectionId="print-section"  ngxPrint>
+  Print
+  </button>
+</div>
+
+
+<div id="print-section">
+  <table id="" class="table table-striped table-bordered dt-responsive nowrap" aria-labelledby="tableLabel" *ngIf="WishListed">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Customer Id</th>
+        <th>Product Id</th>
+        <th>Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of WishListed | paginate: {itemsPerPage: 10, currentPage: p}">
+        <td>{{ p.WishListId }}</td>
+        <td>{{ p.CustomerId }}</td>
+        <td>{{ p.ProductId }}</td>
+        <td>{{ p.Date }}</td>
+        <td class="btn-group">
+          <button class="btn btn-primary" (click)="GetWishList(p.WishListId)">Edit</button>
+          <button class="btn btn-danger" (click)="DeleteConfirmation(p)">Delete</button>
+        </td>
+      </tr>
+      <tr *ngIf="WishListed.Count == 0">
+        <th colspan="4" class="text-center text-warning">No data available</th>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="5" class="text-right">
+          <pagination-controls  (pageChange)="p =$event"></pagination-controls>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="WishListModal" tabindex="-1" role="dialog" aria-labelledby="WishListModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form class="modal-content" #form="ngForm" (ngSubmit)="form.form.valid && SubmitWishList(form)" autocomplete="off" enctype="multipart/form-data">
+      <div class="modal-header">
+        <h5 class="modal-title" id="WishListModalLabel">New WishList</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" [(ngModel)]="WishList.WishListId" name="WishListId"
+               #WishListId="ngModel" />
+
+        <div class="form-group">
+          <label>Customer</label>
+          <select class=" form-control" [(ngModel)]="WishList.CustomerId" name="CustomerId"
+                  #CustomerId="ngModel" [ngClass]="{ 'is-invalid': form.submitted && Customers.invalid }" required >
+
+            <option value="undefined">
+              Please select Value
+            </option>
+            <option *ngFor="let Customers of CustomerList" [ngValue]="Customers.CustomerId">
+              {{Customers.CustomerName}}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Product</label>
+          <select class=" form-control" [(ngModel)]="WishList.ProductId" name="ProductId"
+                  #Brands="ngModel" [ngClass]="{ 'is-invalid': form.submitted && Products.invalid }" required >
+
+            <option value="undefined">
+              Please select Value
+            </option>
+            <option *ngFor="let Products of ProductList" [ngValue]="Products.ProductId">
+              {{Products.ProductName}}
+            </option>
+          </select>
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="Cancel(form)">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="WishListModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="WishListModalLabel">Confirm delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <span class="h2 text-warning">Delete {{WishList.WishListId}}?</span>
+      </div>
+      <div class="modal-footer btn-group">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary" (click)="DeleteWishList(WishList.WishListId)">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
