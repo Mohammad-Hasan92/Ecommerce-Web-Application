@@ -170,6 +170,9 @@ class Products {
     public SubCatId: number;
     public BrandId: number;
 
+    //Sizes: number[];
+    //SizesValue: string;
+
 
 }
 
