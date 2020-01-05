@@ -149,6 +149,7 @@ export class StocksComponent {
 class Stocks {
     StockId: number = 0;
     Quantity: number = 0;
+    UnitPrice: number = 0;
     public ProductId: number;
     public SizeId: number;
 

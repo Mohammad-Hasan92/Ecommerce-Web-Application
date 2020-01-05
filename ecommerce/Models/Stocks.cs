@@ -22,6 +22,11 @@ namespace ecommerce.Models
         [DisplayName("Quantity")]
         [Required]
         public double Quantity { get; set; }
+        [DataType(DataType.Currency)]
+        [DisplayName("Unit Price")]
+        public decimal UnitPrice { get; set; }
+
+
 
         [DataType(DataType.DateTime)]
         public DateTime StockDate { get; set; } = DateTime.Now;

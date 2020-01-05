@@ -26,6 +26,7 @@
         <th>Product Id</th>
         <th>Size Id</th>
         <th>Quantity</th>
+        <th>Unit Price</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -35,6 +36,7 @@
         <td>{{ p.ProductId }}</td>
         <td>{{ p.SizeId }}</td>
         <td>{{ p.Quantity }}</td>
+        <td>{{ p.UnitPrice }}</td>
       
         
         <td class="btn-group">
@@ -104,6 +106,11 @@
           <label>Product Quantity</label>
           <input type="number" class=" form-control" [(ngModel)]="Stocks.Quantity" name="Quantity"
                  #Quantity="ngModel" [ngClass]="{ 'is-invalid': form.submitted &&  Quantity.invalid }" required />
+        </div>
+        <div class="form-group">
+          <label>Unit Price</label>
+          <input type="number" class=" form-control" [(ngModel)]="Stocks.UnitPrice" name="UnitPrice"
+                 #UnitPrice="ngModel" [ngClass]="{ 'is-invalid': form.submitted &&  UnitPrice.invalid }" required />
         </div>
 
       </div>
