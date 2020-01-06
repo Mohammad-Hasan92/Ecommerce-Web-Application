@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ecommerce.Data;
 using ecommerce.Models;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace ecommerce.ApiControllers
 {
@@ -15,10 +17,12 @@ namespace ecommerce.ApiControllers
     public class ProductsController : ControllerBase
     {
         private readonly EcommerceContext _context;
+        private readonly IWebHostEnvironment _env;
 
-        public ProductsController(EcommerceContext context)
+        public ProductsController(EcommerceContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
         }
 
         // GET: api/Products
@@ -45,13 +49,15 @@ namespace ecommerce.ApiControllers
         // PUT: api/Products/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutProducts(int id, Products products)
+        [HttpPut("{id}"), DisableRequestSizeLimit]
+        public async Task<IActionResult> PutProducts(int id, [FromForm]  Products products)
         {
             if (id != products.ProductId)
             {
                 return BadRequest();
             }
+
+            products = await UploadImage(products);
 
             _context.Entry(products).State = EntityState.Modified;
 
@@ -77,14 +83,46 @@ namespace ecommerce.ApiControllers
         // POST: api/Products
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPost]
-        public async Task<ActionResult<Products>> PostProducts(Products products)
+        [HttpPost, DisableRequestSizeLimit]
+        public async Task<ActionResult<Products>> PostProducts([FromForm] Products products)
         {
+
+            products = await UploadImage(products);
+
             _context.Products.Add(products);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetProducts", new { id = products.ProductId }, products);
         }
+
+
+        private async Task<Products> UploadImage(Products products)
+        {
+            if (products.Upload != null && products.Upload.Length > 0)
+            {
+                string fileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(products.Upload.FileName);
+
+
+                string filePath = Path.Combine("Images", fileName);
+
+                string uploadFolder = Path.Combine(_env.WebRootPath, filePath);
+
+                if (!Directory.Exists(Path.GetDirectoryName(uploadFolder)))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(uploadFolder));
+                }
+
+                await using (FileStream fs = new FileStream(uploadFolder, FileMode.Create))
+                {
+                    await products.Upload.CopyToAsync(fs);
+                }
+
+                products.Image = filePath.Replace(@"\", "/");
+                products.Upload = null;
+            }
+            return products;
+        }
+
 
         // DELETE: api/Products/5
         [HttpDelete("{id}")]

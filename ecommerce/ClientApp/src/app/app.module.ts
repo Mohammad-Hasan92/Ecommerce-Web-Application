@@ -38,6 +38,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 
 import {MatInputModule} from '@angular/material/input';
 import { MaterialModule } from './material/material.component';
+import { PurchaseViewModelComponent } from './purchaseviewmodel/purchaseviewmodel.component';
 
 
 
@@ -60,7 +61,8 @@ import { MaterialModule } from './material/material.component';
         ProductsComponent,
         WishListComponent,
         StocksComponent,
-        CommentsComponent
+        CommentsComponent,
+        PurchaseViewModelComponent
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -90,6 +92,7 @@ import { MaterialModule } from './material/material.component';
             { path: 'wishlist', component: WishListComponent },
             { path: 'stocks', component: StocksComponent },
             { path: 'comments', component: CommentsComponent },
+            { path: 'purchase', component: PurchaseViewModelComponent },
             { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
         ])
     ],

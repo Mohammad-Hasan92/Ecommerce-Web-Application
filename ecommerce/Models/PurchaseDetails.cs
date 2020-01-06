@@ -13,9 +13,9 @@ namespace ecommerce.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PurchaseDetailId { get; set; }
-        [ForeignKey("Purchase")]
+       
         public int PurchaseId { get; set; }
-        [ForeignKey("Products")]
+     
         public int ProductId { get; set; }
         [DisplayName("Quantity")]
         [Required]
@@ -24,6 +24,13 @@ namespace ecommerce.Models
         [DisplayName("Unit Price")]
         [Required]
         public decimal unitPrice { get; set; }
+
+        [DisplayName("Size")]
+        [Required]
+        public int SizeId { get; set; }
+
+
+
         [DataType(DataType.Currency)]
         [DisplayName("Total Price")]
         [Required]
@@ -31,8 +38,18 @@ namespace ecommerce.Models
         public decimal TotalPrice => (decimal)Quantity * unitPrice;
 
         public Guid UniqueId { get; set; } = Guid.NewGuid();
-         public virtual Purchase Purchase { get; set; }
-         public virtual Products Products { get; set; }
+
+
+        [ForeignKey("PurchaseId")]
+        public virtual Purchase Purchase { get; set; }
+
+
+        [ForeignKey("ProductId")]
+        public virtual Products Products { get; set; }
+
+
+        [ForeignKey("SizeId")]
+        public virtual Products Sizes { get; set; }
 
     }
 }

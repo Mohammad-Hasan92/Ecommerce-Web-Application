@@ -22,5 +22,6 @@ namespace ecommerce.Models
 
         public virtual ICollection<Stocks> Stocks { get; set; }
         public virtual ICollection<ProductSizes> ProductSizes { get; set; }
+        public virtual ICollection<PurchaseDetails> PurchaseDetails { get; set; }
     }
 }

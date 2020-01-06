@@ -84,17 +84,26 @@ export class SubCategoryComponent {
     public SubmitSubCategory(form: NgForm) {
 
 
+        const formData = new FormData();
+
+        formData.append('SubCatId', this.SubCategory.SubCatId.toString());
+        formData.append('SubCategoryName', this.SubCategory.SubCategoryName);
+        formData.append('Image', this.SubCategory.Image);
+        formData.append('Upload', this.SubCategory.Upload, this.SubCategory.Upload.name);
+        formData.append('CatId', this.SubCategory.CatId.toString());
+
+
         if (this.SubCategory.SubCatId == 0) {
-            this.CreateSubCategory(form);
+            this.CreateSubCategory(form, formData);
         }
         else {
-            this.UpdateSubCategory(form);
+            this.UpdateSubCategory(form, formData);
         }
     }
 
-    CreateSubCategory(form: NgForm) {
+    CreateSubCategory(form: NgForm, formData: FormData) {
 
-        this.Http.post<SubCategory>(this.BaseUrl + 'api/SubCategories', this.SubCategory)
+        this.Http.post<SubCategory>(this.BaseUrl + 'api/SubCategories', formData)
             .subscribe(result => {
                 this.LoadList();
                 this.Cancel(form);
@@ -105,11 +114,11 @@ export class SubCategoryComponent {
     }
 
 
-    UpdateSubCategory(form: NgForm) {
+    UpdateSubCategory(form: NgForm, formData: FormData) {
 
 
 
-        this.Http.put(this.BaseUrl + 'api/SubCategories/' + this.SubCategory.SubCatId, this.SubCategory)
+        this.Http.put(this.BaseUrl + 'api/SubCategories/' + this.SubCategory.SubCatId, formData)
             .subscribe(result => {
                 let name = this.SubCategory.SubCategoryName;
                 this.LoadList();

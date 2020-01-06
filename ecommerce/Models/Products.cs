@@ -40,6 +40,8 @@ namespace ecommerce.Models
 
         public virtual ICollection<Stocks> Stocks { get; set; }
         public virtual ICollection<ProductSizes> ProductSizes { get; set; }
+
+        [NotMapped]
         public virtual ICollection<PurchaseDetails> PurchaseDetails { get; set; }
          public virtual ICollection<Comments> Comments { get; set; }
         public virtual ICollection<WishList> WishList { get; set; }

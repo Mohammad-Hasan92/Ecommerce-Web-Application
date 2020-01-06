@@ -32,8 +32,11 @@
       <tr *ngFor="let p of CategoryList | paginate: {itemsPerPage: 10, currentPage: p}">
         <td>{{ p.CatId }}</td>
         <td>{{ p.CategoryName }}</td>
-        <td>{{ p.Image }}</td>
+        <td class="img-thumbnail mb-3 ">
+          <img [src]="p.Image" alt="{{p.Image}}" width="200" height="150" class="text-center" style="margin: 0  auto" />
+        </td>
         
+
         <td class="btn-group">
           <button class="btn btn-primary" (click)="GetCategory(p.CatId)">Edit</button>
           <button class="btn btn-danger" (click)="DeleteConfirmation(p)">Delete</button>
@@ -51,6 +54,32 @@
       </tr>
     </tfoot>
   </table>
+
+
+
+  <div class="container-fluid">
+
+    <div class="card col-4" *ngFor="let p of CategoryList " style="display:inline; float:left; margin:16px;">
+      <div class="card-header">
+        <span class="text-info"> {{ p.CatId }} : {{ p.CategoryName }}</span>
+      </div>
+      <div class="card-body">
+        <figure class="img-thumbnail mb-3 ">
+          <img [src]="p.Image" alt="{{p.Image}}" width="300" height="200" class="text-center" style="margin: 0  auto" />
+          <figcaption>{{ p.CategoryName }}</figcaption>
+        </figure>
+      </div>
+      <div class="card-footer btn-group">
+        <button class="btn btn-primary" (click)="GetCategory(p.CatId)">Edit</button>
+        <button class="btn btn-danger" (click)="DeleteConfirmation(p)">Delete</button>
+      </div>
+    </div>
+
+
+  </div>
+
+
+
 </div>
 
 
@@ -84,7 +113,6 @@
                      #Upload="ngModel" (change)="onFileChanged($event)" />
             </figcaption>
           </figure>
-
 
         </div>
 

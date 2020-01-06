@@ -35,6 +35,10 @@ namespace ecommerce.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
             modelBuilder.Entity<ProductSizes>()
                 .HasKey(o => new { o.ProductId, o.SizeId });
 

@@ -34,7 +34,9 @@
         <td>{{ p.SubCatId }}</td>
         <td>{{ p.SubCategoryName }}</td>
         <td>{{ p.CatId }}</td>
-        <td>{{ p.Image }}</td>
+        <td class="img-thumbnail mb-3 ">
+          <img [src]="p.Image" alt="{{p.Image}}" width="200" height="150" class="text-center" style="margin: 0  auto" />
+        </td>
         
         <td class="btn-group">
           <button class="btn btn-primary" (click)="GetCategory(p.SubCatId)">Edit</button>

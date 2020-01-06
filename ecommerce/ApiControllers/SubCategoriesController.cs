@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ecommerce.Data;
 using ecommerce.Models;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace ecommerce.ApiControllers
 {
@@ -15,10 +17,12 @@ namespace ecommerce.ApiControllers
     public class SubCategoriesController : ControllerBase
     {
         private readonly EcommerceContext _context;
+        private readonly IWebHostEnvironment _env;
 
-        public SubCategoriesController(EcommerceContext context)
+        public SubCategoriesController(EcommerceContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
         }
 
         // GET: api/SubCategories
@@ -45,13 +49,15 @@ namespace ecommerce.ApiControllers
         // PUT: api/SubCategories/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutSubCategory(int id, SubCategory subCategory)
+        [HttpPut("{id}"), DisableRequestSizeLimit]
+        public async Task<IActionResult> PutSubCategory(int id, [FromForm] SubCategory subCategory)
         {
             if (id != subCategory.SubCatId)
             {
                 return BadRequest();
             }
+
+            subCategory = await UploadImage(subCategory); 
 
             _context.Entry(subCategory).State = EntityState.Modified;
 
@@ -77,13 +83,44 @@ namespace ecommerce.ApiControllers
         // POST: api/SubCategories
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPost]
-        public async Task<ActionResult<SubCategory>> PostSubCategory(SubCategory subCategory)
+        [HttpPost, DisableRequestSizeLimit]
+        public async Task<ActionResult<SubCategory>> PostSubCategory([FromForm] SubCategory subCategory)
         {
+
+            subCategory = await UploadImage(subCategory);
+
             _context.SubCategory.Add(subCategory);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetSubCategory", new { id = subCategory.SubCatId }, subCategory);
+        }
+
+
+        private async Task<SubCategory> UploadImage(SubCategory subCategory)
+        {
+            if (subCategory.Upload != null && subCategory.Upload.Length > 0)
+            {
+                string fileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(subCategory.Upload.FileName);
+
+
+                string filePath = Path.Combine("Images", fileName);
+
+                string uploadFolder = Path.Combine(_env.WebRootPath, filePath);
+
+                if (!Directory.Exists(Path.GetDirectoryName(uploadFolder)))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(uploadFolder));
+                }
+
+                await using (FileStream fs = new FileStream(uploadFolder, FileMode.Create))
+                {
+                    await subCategory.Upload.CopyToAsync(fs);
+                }
+
+                subCategory.Image = filePath.Replace(@"\", "/");
+                subCategory.Upload = null;
+            }
+            return subCategory;
         }
 
         // DELETE: api/SubCategories/5

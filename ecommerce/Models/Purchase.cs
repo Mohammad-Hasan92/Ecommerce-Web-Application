@@ -20,6 +20,9 @@ namespace ecommerce.Models
         public DateTime PurchaseDate { get; set; } = DateTime.Now;
         public Guid UniqueId { get; set; } = Guid.NewGuid();
 
+
+
+
          public virtual ICollection<PurchaseDetails> PurchaseDetails { get; set; }
     }
 }

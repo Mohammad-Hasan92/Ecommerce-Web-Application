@@ -94,17 +94,28 @@ export class ProductsComponent {
     public SubmitProducts(form: NgForm) {
 
 
+        const formData = new FormData();
+
+        formData.append('ProductId', this.Products.ProductId.toString());
+        formData.append('ProductName', this.Products.ProductName);
+        formData.append('Image', this.Products.Image);
+        formData.append('Upload', this.Products.Upload, this.Products.Upload.name);
+        formData.append('SubCatId', this.Products.SubCatId.toString());
+        formData.append('BrandId', this.Products.BrandId.toString());
+
+
+
         if (this.Products.ProductId == 0) {
-            this.CreateProducts(form);
+            this.CreateProducts(form, formData);
         }
         else {
-            this.UpdateProducts(form);
+            this.UpdateProducts(form, formData);
         }
     }
 
-    CreateProducts(form: NgForm) {
+    CreateProducts(form: NgForm, formData:FormData) {
 
-        this.Http.post<SubCategory>(this.BaseUrl + 'api/Products', this.Products)
+        this.Http.post<SubCategory>(this.BaseUrl + 'api/Products', formData)
             .subscribe(result => {
                 this.LoadList();
                 this.Cancel(form);
@@ -115,11 +126,11 @@ export class ProductsComponent {
     }
 
 
-    UpdateProducts(form: NgForm) {
+    UpdateProducts(form: NgForm, formData: FormData) {
 
 
 
-        this.Http.put(this.BaseUrl + 'api/Products/' + this.Products.ProductId, this.Products)
+        this.Http.put(this.BaseUrl + 'api/Products/' + this.Products.ProductId, formData)
             .subscribe(result => {
                 let name = this.Products.ProductName;
                 this.LoadList();

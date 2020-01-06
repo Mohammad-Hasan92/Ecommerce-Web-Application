@@ -11,6 +11,7 @@ using ecommerce.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace ecommerce
 {
@@ -42,6 +43,14 @@ namespace ecommerce
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            services.Configure<FormOptions>(o =>
+            {
+                o.ValueLengthLimit = int.MaxValue;
+                o.MultipartBodyLengthLimit = int.MaxValue;
+                o.MemoryBufferThreshold = int.MaxValue;
+            });
+
             services.AddControllersWithViews().AddJsonOptions(opt => {
                 opt.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
                 opt.JsonSerializerOptions.PropertyNamingPolicy = null;

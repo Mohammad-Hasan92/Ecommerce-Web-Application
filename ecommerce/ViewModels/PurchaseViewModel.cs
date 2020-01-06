@@ -8,7 +8,8 @@ namespace ecommerce.ViewModels
 {
     public class PurchaseViewModel
     {
-        public Purchase purchases { get; set; }
+
+        public Purchase purchase { get; set; }
         public List<PurchaseDetails> purchasedetails { get; set; }
     }
 }

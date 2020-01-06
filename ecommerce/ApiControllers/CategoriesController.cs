@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ecommerce.Data;
 using ecommerce.Models;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace ecommerce.ApiControllers
 {
@@ -15,10 +17,12 @@ namespace ecommerce.ApiControllers
     public class CategoriesController : ControllerBase
     {
         private readonly EcommerceContext _context;
+        private readonly IWebHostEnvironment _env;
 
-        public CategoriesController(EcommerceContext context)
+        public CategoriesController(EcommerceContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
         }
 
         // GET: api/Categories
@@ -45,13 +49,15 @@ namespace ecommerce.ApiControllers
         // PUT: api/Categories/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCategory(int id, Category category)
+        [HttpPut("{id}"), DisableRequestSizeLimit]
+        public async Task<IActionResult> PutCategory(int id, [FromForm] Category category)
         {
             if (id != category.CatId)
             {
                 return BadRequest();
             }
+
+            category = await UploadImage(category);
 
             _context.Entry(category).State = EntityState.Modified;
 
@@ -77,13 +83,42 @@ namespace ecommerce.ApiControllers
         // POST: api/Categories
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPost]
-        public async Task<ActionResult<Category>> PostCategory(Category category)
+        [HttpPost, DisableRequestSizeLimit]
+        public async Task<ActionResult<Category>> PostCategory([FromForm] Category category)
         {
+            category = await UploadImage(category);
+
             _context.Category.Add(category);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCategory", new { id = category.CatId }, category);
+        }
+
+        private async Task<Category> UploadImage(Category category)
+        {
+            if (category.Upload != null && category.Upload.Length > 0)
+            {
+                string fileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(category.Upload.FileName);
+
+
+                string filePath = Path.Combine("Images", fileName);
+
+                string uploadFolder = Path.Combine(_env.WebRootPath, filePath);
+
+                if (!Directory.Exists(Path.GetDirectoryName(uploadFolder)))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(uploadFolder));
+                }
+
+                await using (FileStream fs = new FileStream(uploadFolder, FileMode.Create))
+                {
+                    await category.Upload.CopyToAsync(fs);
+                }
+
+                category.Image = filePath.Replace(@"\", "/");
+                category.Upload = null;
+            }
+            return category;
         }
 
         // DELETE: api/Categories/5

@@ -70,19 +70,27 @@ export class CategoryComponent {
 
 
     public SubmitCategory(form: NgForm) {
+        const formData = new FormData();
 
+        formData.append('CatId', this.Category.CatId.toString());
+        formData.append('CategoryName', this.Category.CategoryName);
+        formData.append('Image', this.Category.Image);
+        formData.append('Upload', this.Category.Upload, this.Category.Upload.name);
 
         if (this.Category.CatId == 0) {
-            this.CreateCategory(form);
+            this.CreateCategory(form, formData );
         }
         else {
-            this.UpdateCategory(form);
+            this.UpdateCategory(form, formData);
         }
     }
 
-    CreateCategory(form: NgForm) {
+    CreateCategory(form: NgForm, formData: FormData) {
 
-        this.Http.post<Category>(this.BaseUrl + 'api/Categories', this.Category)
+
+
+
+        this.Http.post<Category>(this.BaseUrl + 'api/Categories', formData)
             .subscribe(result => {
                 this.LoadList();
                 this.Cancel(form);
@@ -93,11 +101,9 @@ export class CategoryComponent {
     }
 
 
-    UpdateCategory(form: NgForm) {
+    UpdateCategory(form: NgForm, formData: FormData) {
 
-
-
-        this.Http.put(this.BaseUrl + 'api/Categories/' + this.Category.CatId, this.Category)
+        this.Http.put(this.BaseUrl + 'api/Categories/' + this.Category.CatId, formData)
             .subscribe(result => {
                 let name = this.Category.CategoryName;
                 this.LoadList();
