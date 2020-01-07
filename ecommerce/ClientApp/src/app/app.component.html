@@ -1,6 +1,36 @@
-<body>
+<!--<body>
   <app-nav-menu></app-nav-menu>
   <div class="container">
     <router-outlet></router-outlet>
   </div>
-</body>
+</body>-->
+  <body>
+    <div class="">
+      <app-nav-menu></app-nav-menu>
+      <mat-sidenav-container>
+        <mat-sidenav #sidenav mode="side" [(opened)]="opened">
+          Admin Panel
+          <mat-nav-list [routerLinkActive]="['link-active']">
+            <a mat-list-item [routerLink]="['/']">Home</a>
+            <a mat-list-item [routerLink]="['/brand']">Brand</a>
+            <a mat-list-item [routerLink]="['/customer']">Customer</a>
+            <a mat-list-item  [routerLink]="['/sizes']">Sizes</a>
+            <a mat-list-item [routerLink]="['/category']">Category</a>
+            <a mat-list-item [routerLink]="['/suppliers']">Suppliers</a>
+            <a mat-list-item [routerLink]="['/subcategory']">Sub Category</a>
+            <a mat-list-item [routerLink]="['/products']">Products</a>
+            <a mat-list-item [routerLink]="['/wishlist']">WishList</a>
+            <a mat-list-item [routerLink]="['/stocks']">Stocks</a>
+            <a mat-list-item [routerLink]="['/comments']">Comments</a>
+            <a mat-list-item  [routerLink]="['/purchase']">Purchase</a>
+          </mat-nav-list>
+        </mat-sidenav>
+
+        <mat-sidenav-content>
+          <button (click)="sidenav.toggle()">Menu</button>
+
+          <router-outlet></router-outlet>
+        </mat-sidenav-content>
+      </mat-sidenav-container>
+    </div>
+  </body>

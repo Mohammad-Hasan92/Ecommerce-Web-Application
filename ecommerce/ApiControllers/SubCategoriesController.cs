@@ -9,6 +9,7 @@ using ecommerce.Data;
 using ecommerce.Models;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using ecommerce.ViewModels;
 
 namespace ecommerce.ApiControllers
 {
@@ -31,6 +32,10 @@ namespace ecommerce.ApiControllers
         {
             return await _context.SubCategory.ToListAsync();
         }
+
+
+
+
 
         // GET: api/SubCategories/5
         [HttpGet("{id}")]
