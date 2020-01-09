@@ -33,6 +33,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\RoleController.cs" />
+    <Compile Remove="Models\ApplicationRole.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="ClientApp\src\app\material\material.component.ts" />
   </ItemGroup>
 

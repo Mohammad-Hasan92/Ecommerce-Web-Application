@@ -23,9 +23,12 @@ namespace ecommerce.ApiControllers
 
         // GET: api/Comments
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Comments>>> GetComments()
+        public async Task<ActionResult<IEnumerable<object>>> GetComments()
         {
-            return await _context.Comments.ToListAsync();
+
+            var CommentList = _context.Comments.Select(r => new { r.CommentId, r.Customers.CustomerName, r.Products.ProductName, r.CommentText, r.Date }).ToList();
+
+            return CommentList;
         }
 
         // GET: api/Comments/5

@@ -22,9 +22,9 @@
   <table id="" class="table table-striped table-bordered dt-responsive nowrap" aria-labelledby="tableLabel" *ngIf="SubCategoryList">
     <thead>
       <tr>
-        <th>SubCategory Id</th>
+        <th>Id</th>
         <th>SubCategory Name</th>
-        <th>Category No.</th>
+        <th>Category Name</th>
         <th>Image</th>
         <th>Action</th>
       </tr>
@@ -33,7 +33,7 @@
       <tr *ngFor="let p of SubCategoryList | paginate: {itemsPerPage: 10, currentPage: p}">
         <td>{{ p.SubCatId }}</td>
         <td>{{ p.SubCategoryName }}</td>
-        <td>{{ p.CatId }}</td>
+        <td>{{ p.CategoryName }}</td>
         <td class="img-thumbnail mb-3 ">
           <img [src]="p.Image" alt="{{p.Image}}" width="200" height="150" class="text-center" style="margin: 0  auto" />
         </td>

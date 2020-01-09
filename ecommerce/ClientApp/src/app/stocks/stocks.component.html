@@ -23,8 +23,8 @@
     <thead>
       <tr>
         <th>Stock Id</th>
-        <th>Product Id</th>
-        <th>Size Id</th>
+        <th>Product Name</th>
+        <th>Size Value</th>
         <th>Quantity</th>
         <th>Unit Price</th>
         <th>Action</th>
@@ -33,8 +33,8 @@
     <tbody>
       <tr *ngFor="let p of StocksList | paginate: {itemsPerPage: 10, currentPage: p}">
         <td>{{ p.StockId }}</td>
-        <td>{{ p.ProductId }}</td>
-        <td>{{ p.SizeId }}</td>
+        <td>{{ p.ProductName }}</td>
+        <td>{{ p.SizeValue }}</td>
         <td>{{ p.Quantity }}</td>
         <td>{{ p.UnitPrice }}</td>
       

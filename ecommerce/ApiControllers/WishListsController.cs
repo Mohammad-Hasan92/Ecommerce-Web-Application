@@ -23,9 +23,11 @@ namespace ecommerce.ApiControllers
 
         // GET: api/WishLists
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<WishList>>> GetWishLists()
+        public async Task<ActionResult<IEnumerable<object>>> GetWishLists()
         {
-            return await _context.WishLists.ToListAsync();
+            var WishList = _context.WishLists.Select(r => new { r.WishListId, r.Date, r.Products.ProductName, r.Customers.CustomerName }).ToList();
+
+            return WishList;
         }
 
         // GET: api/WishLists/5

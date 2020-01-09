@@ -35,7 +35,7 @@ namespace ecommerce
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<ApplicationUser>()
-                .AddRoles<ApplicationRole>()
+                //.AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
@@ -44,12 +44,12 @@ namespace ecommerce
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
-            services.Configure<FormOptions>(o =>
-            {
-                o.ValueLengthLimit = int.MaxValue;
-                o.MultipartBodyLengthLimit = int.MaxValue;
-                o.MemoryBufferThreshold = int.MaxValue;
-            });
+            //services.Configure<FormOptions>(o =>
+            //{
+            //    o.ValueLengthLimit = int.MaxValue;
+            //    o.MultipartBodyLengthLimit = int.MaxValue;
+            //    o.MemoryBufferThreshold = int.MaxValue;
+            //});
 
             services.AddControllersWithViews().AddJsonOptions(opt => {
                 opt.JsonSerializerOptions.PropertyNameCaseInsensitive = true;

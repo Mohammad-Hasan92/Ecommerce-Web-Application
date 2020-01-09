@@ -25,8 +25,8 @@
       
       <tr>
         <th>Id</th>
-        <th>Customer Id</th>
-        <th>Product Id</th>
+        <th>Customer Name</th>
+        <th>Product Name</th>
         <th>Comment</th>
         <th>Date</th>
         <th>Action</th>
@@ -35,8 +35,8 @@
     <tbody>
       <tr *ngFor="let p of CommentList | paginate: {itemsPerPage: 10, currentPage: p}">
         <td>{{ p.CommentId }}</td>
-        <td>{{ p.CustomerId }}</td>
-        <td>{{ p.ProductId }}</td>
+        <td>{{ p.CustomerName }}</td>
+        <td>{{ p.ProductName }}</td>
         <td>{{ p.CommentText }}</td>
         <td>{{ p.Date }}</td>
         <td class="btn-group">

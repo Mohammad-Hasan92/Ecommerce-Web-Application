@@ -27,9 +27,12 @@ namespace ecommerce.ApiControllers
 
         // GET: api/Products
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Products>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<object>>> GetProducts()
         {
-            return await _context.Products.ToListAsync();
+
+            var ProductList = _context.Products.Select(r => new { r.ProductId, r.ProductName, r.SubCategory.SubCategoryName, r.Brand.BrandName, r.Image }).ToList();
+
+            return ProductList;
         }
 
         // GET: api/Products/5

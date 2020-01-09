@@ -141,6 +141,8 @@ class Comments {
     CustomerId: number;
     CommentText: string;
     Date: Date;
+    ProductName: string;
+    CustomerName: string;
 }
 
 interface Products {

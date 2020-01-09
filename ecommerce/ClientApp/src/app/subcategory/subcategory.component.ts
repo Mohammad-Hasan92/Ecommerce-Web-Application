@@ -167,6 +167,7 @@ class SubCategory {
     public Image: string = "";
     public Upload: File;
     public CatId: number;
+    public CategoryName: string;
 
 
 }

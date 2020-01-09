@@ -152,6 +152,8 @@ class Stocks {
     UnitPrice: number = 0;
     public ProductId: number;
     public SizeId: number;
+    ProductName: string;
+    SizeValue: string;
 
 
 }

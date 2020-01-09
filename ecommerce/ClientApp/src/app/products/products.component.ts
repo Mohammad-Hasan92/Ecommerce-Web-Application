@@ -180,6 +180,8 @@ class Products {
     public Upload: File;
     public SubCatId: number;
     public BrandId: number;
+    SubCategoryName: string;
+    BrandName: string;
 
     //Sizes: number[];
     //SizesValue: string;

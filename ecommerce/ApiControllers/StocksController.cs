@@ -23,9 +23,11 @@ namespace ecommerce.ApiControllers
 
         // GET: api/Stocks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Stocks>>> GetStocks()
+        public async Task<ActionResult<IEnumerable<object>>> GetStocks()
         {
-            return await _context.Stocks.ToListAsync();
+            var stockList = _context.Stocks.Select(r => new { r.StockId, r.Products.ProductName, r.Sizes.SizeValue, r.Quantity,r.UnitPrice }).ToList();
+
+            return stockList;
         }
 
         // GET: api/Stocks/5

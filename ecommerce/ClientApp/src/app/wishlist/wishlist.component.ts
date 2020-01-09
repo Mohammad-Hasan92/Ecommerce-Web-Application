@@ -139,6 +139,8 @@ class WishList {
     WishListId: number = 0;
     ProductId: number;
     CustomerId: number;
+    ProductName: string;
+    CustomerName: string;
     Date: Date;
 }
 
