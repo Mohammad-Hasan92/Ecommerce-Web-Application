@@ -30,6 +30,7 @@
                   <th>Price</th>
                   <th>Qty.</th>
                   <th>Amount</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -38,6 +39,10 @@
                   <td>{{ c.Qty }}</td>
                   <td>{{ c.Price }}</td>
                   <td>{{ c.Amount }}</td>
+                  <td>
+                    <i class="fa fa-minus-square-o" style="font-size:36px;color:red;align-content:flex-start" (click)="RemoveFromCart(c)"></i>
+                    <i class="fa fa-plus-square-o" style="font-size:36px;color:blue;align-content:flex-end" (click)="AddToCart(c)"></i>
+                  </td>
                 </tr>
               </tbody>
               <tfoot>
@@ -50,7 +55,7 @@
           </div>
           <div class="modal-footer btn-group">
             <button type="button" class="btn btn-secondary" (click)="ClearCart()">Clear</button>
-            <button type="button" class="btn btn-primary">CheckOut</button>
+            <button type="submit" class="btn btn-primary">CheckOut</button>
           </div>
         </div>
       </div>
@@ -60,24 +65,24 @@
   <div class="container-fluid">
 
     <div class="card col-3 rounded" *ngFor="let p of LogList |paginate: {itemsPerPage: 12, currentPage: p} " style="display:inline; float:left; ">
-      <div class="card-header">
+      <div class="card-header text-center">
         <i class="fa fa-minus-square-o" style="font-size:36px;color:red;align-content:flex-start" (click)="RemoveFromCart(p)"></i>
-        <span class="col-3"></span>
+        <span class=""></span>
         <span class="text-info h4">Add To Cart</span>
-        <span class="col-3"></span>
+        <span class=""></span>
         <i class="fa fa-plus-square-o" style="font-size:36px;color:blue;align-content:flex-end" (click)="AddToCart(p)"></i>
       </div>
       <div class="card-body table-responsive">
         <figure class="img-thumbnail mb-4 rounded" style="height:150px; width:200px; margin:10px;">
           <img [src]="p.Image" alt="{{p.Image}}" class="text-center" style="margin: 0  auto; height:inherit; width:inherit;" />
-          <figcaption>{{p.ProductName }}</figcaption>
+          <figcaption>{{p.ProductName }}<span class="col-1"></span>
+          <span class="text-info">Price : {{ p.SellingPrice }}</span></figcaption>
         </figure>
       </div>
       <div class="card-footer btn-group">
-        <!--<span class="text-info"> {{ p.ProductName }}</span>-->
-        <span class="text-info"> {{ p.SellingPrice }}</span> || 
-        <span class="text-info"> {{ p.Discount }}</span> || 
-        <span class="text-info"> {{ p.NetSellingPrice }}</span>
+        <span class="text-info">Discount : {{ p.Discount }}</span>
+        <span class="col-1"></span> 
+        <span style="color:red">Now : {{ p.NetSellingPrice }}</span>
       </div>
     </div>
 

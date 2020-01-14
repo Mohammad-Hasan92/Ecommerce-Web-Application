@@ -100,6 +100,25 @@ export class HomeComponent {
 
         //this.CartVM.CartItems.push(newPrd);
     }
+
+
+    //CreateOrder(form: NgForm, formData: FormData) {
+
+    //    this.Http.post<SubCategory>(this.BaseUrl + 'api/Products', formData)
+    //        .subscribe(result => {
+    //            this.LoadList();
+    //            this.Cancel(form);
+    //            $('#ProductsModal').modal('hide');
+    //            this.Toastr.successToastr(result.SubCategoryName + ' create successfully', "Success");
+
+    //        }, error => this.Toastr.errorToastr(error, "Error"));
+    //}
+
+
+
+
+
+
 }
 
 

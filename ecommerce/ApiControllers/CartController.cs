@@ -23,18 +23,26 @@ namespace ecommerce.ApiControllers
         public async Task<ActionResult<CartVM>> GetCart()
         {
             CartVM cart = new CartVM();
+
+           // var pN = _context.Products.Select(r => r.ProductName).ToList();
+
+              
             try
             {
                 cart = this.HttpContext.Session.Get<CartVM>("cart");
                 if (cart == null)
                 {
                     cart = new CartVM();
+                    
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
+
+            
+
             return cart;
         }
        
