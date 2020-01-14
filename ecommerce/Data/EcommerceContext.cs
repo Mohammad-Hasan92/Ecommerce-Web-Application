@@ -28,6 +28,9 @@ namespace ecommerce.Data
         public DbSet<Suppliers> Suppliers { get; set; }
         public DbSet<WishList> WishLists { get; set; }
 
+        public DbSet<ProductGroup> ProductGroup { get; set; }
+        public DbSet<Log> Log { get; set; }
+
 
         public EcommerceContext(DbContextOptions<EcommerceContext> opt) : base(opt)
         {
@@ -45,5 +48,6 @@ namespace ecommerce.Data
             modelBuilder.Entity<BrandSuppliers>()
                 .HasKey(o => new { o.BrandId, o.SupplierId });
         }
+       
     }
 }

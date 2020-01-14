@@ -1,23 +1,83 @@
 
 
+  <div>
+    <div class="text-right">
+    <button type="button" data-toggle="modal" data-target="#CartModal" class="btn btn-success">
+     <span class="badge">Total Items : {{CartVM.TotalItems}} | Amount : {{CartVM.Total}}</span>
+    </button>
+    </div>
+
+    <div class="modal fade" id="CartModal" tabindex="-1" role="dialog" aria-labelledby="CartModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header ">
+            <h5 class="modal-title" id="CartModalLabel">Shopping Cart</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body card table-responsive">
+            <div class="card-header">
+              <span>Total Item : {{CartVM.TotalItems}}</span>
+              <br />
+              <span>Total : {{CartVM.Total}}</span>
+              <br />
+            </div>
+            <table class="table table-hover card-body">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Qty.</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let c of CartVM.CartItems">
+                  <td>{{ c.ProductName }}</td>
+                  <td>{{ c.Qty }}</td>
+                  <td>{{ c.Price }}</td>
+                  <td>{{ c.Amount }}</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th colspan="3" class="text-right">Total : </th>
+                  <th>{{CartVM.Total}}</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <div class="modal-footer btn-group">
+            <button type="button" class="btn btn-secondary" (click)="ClearCart()">Clear</button>
+            <button type="button" class="btn btn-primary">CheckOut</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container-fluid">
 
-    <div class="card col-3 rounded" *ngFor="let p of ProductsList |paginate: {itemsPerPage: 12, currentPage: p} " style="display:inline; float:left; ">
+    <div class="card col-3 rounded" *ngFor="let p of LogList |paginate: {itemsPerPage: 12, currentPage: p} " style="display:inline; float:left; ">
       <div class="card-header">
-        <i class="fa fa-minus-square-o" style="font-size:36px;color:red;align-content:flex-start"></i>
+        <i class="fa fa-minus-square-o" style="font-size:36px;color:red;align-content:flex-start" (click)="RemoveFromCart(p)"></i>
         <span class="col-3"></span>
         <span class="text-info h4">Add To Cart</span>
         <span class="col-3"></span>
-        <i class="fa fa-plus-square-o" style="font-size:36px;color:blue;align-content:flex-end"></i>
+        <i class="fa fa-plus-square-o" style="font-size:36px;color:blue;align-content:flex-end" (click)="AddToCart(p)"></i>
       </div>
       <div class="card-body table-responsive">
         <figure class="img-thumbnail mb-4 rounded" style="height:150px; width:200px; margin:10px;">
           <img [src]="p.Image" alt="{{p.Image}}" class="text-center" style="margin: 0  auto; height:inherit; width:inherit;" />
-          <!--<figcaption>{ p.ProductName }}</figcaption>-->
+          <figcaption>{{p.ProductName }}</figcaption>
         </figure>
       </div>
       <div class="card-footer btn-group">
-        <span class="text-info"> {{ p.ProductName }}</span>
+        <!--<span class="text-info"> {{ p.ProductName }}</span>-->
+        <span class="text-info"> {{ p.SellingPrice }}</span> || 
+        <span class="text-info"> {{ p.Discount }}</span> || 
+        <span class="text-info"> {{ p.NetSellingPrice }}</span>
       </div>
     </div>
 

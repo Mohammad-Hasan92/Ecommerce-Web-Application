@@ -35,8 +35,10 @@ namespace ecommerce.Models
         public virtual Products Products { get; set; }
         public virtual Sizes Sizes { get; set; }
 
+        public virtual ICollection<Log> Log { get; set; }
 
 
-        
+
+
     }
 }

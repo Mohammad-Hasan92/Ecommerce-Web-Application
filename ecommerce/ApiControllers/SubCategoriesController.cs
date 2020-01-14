@@ -36,9 +36,7 @@ namespace ecommerce.ApiControllers
 
         public async Task<ActionResult<IEnumerable<object>>> GetSubCategory()
         {
-            //var innerJoinQuery = from sc in _context.SubCategory
-            //                     join c in _context.Category on sc.CatId equals c.CatId
-            //                     select new { sc.SubCatId, sc.SubCategoryName,c.CategoryName,sc.Image };
+            
 
 
             var subCatList = _context.SubCategory.Select(r => new { r.SubCatId, r.SubCategoryName, r.Category.CategoryName,r.Image}).ToList();
@@ -46,7 +44,7 @@ namespace ecommerce.ApiControllers
 
 
 
-            return subCatList;
+            return  subCatList;
         }
 
 

@@ -26,6 +26,7 @@
         <th>Products Name</th>
         <th>SubCategory Name</th>
         <th>Brand Name</th>
+        <th>Group Name</th>
         <th>Image</th>
         <th>Action</th>
       </tr>
@@ -36,6 +37,7 @@
         <td>{{ p.ProductName }}</td>
         <td>{{ p.SubCategoryName }}</td>
         <td>{{ p.BrandName }}</td>
+        <td>{{ p.GroupName }}</td>
         <td class="img-thumbnail mb-3 ">
           <img [src]="p.Image" alt="{{p.Image}}" width="200" height="150" class="text-center" style="margin: 0  auto" />
         </td>
@@ -119,6 +121,20 @@
             </option>
             <option *ngFor="let Brand of BrandList" [ngValue]="Brand.BrandId">
               {{Brand.BrandName}}
+            </option>
+          </select>
+
+        </div>
+        <div class="form-group">
+          <label>Group</label>
+          <select class=" form-control" [(ngModel)]="Products.GroupId" name="GroupId"
+                  #GroupId="ngModel" [ngClass]="{ 'is-invalid': form.submitted && GroupId.invalid }" required>
+
+            <option value="undefined">
+              Please select Value
+            </option>
+            <option *ngFor="let Group of ProductGroupList" [ngValue]="Group.GroupId">
+              {{Group.GroupName}}
             </option>
           </select>
 

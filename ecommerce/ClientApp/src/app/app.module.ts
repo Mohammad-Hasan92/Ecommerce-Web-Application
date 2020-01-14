@@ -20,6 +20,8 @@ import { ProductsComponent } from './products/products.component';
 import { WishListComponent } from './wishlist/wishlist.component';
 import { StocksComponent } from './stocks/stocks.component';
 import { CommentsComponent } from './comments/comments.component';
+import { ProductGroupComponent } from './productgroup/productgroup.component';
+
 import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
@@ -39,6 +41,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
 import { MaterialModule } from './material/material.component';
 import { PurchaseViewModelComponent } from './purchaseviewmodel/purchaseviewmodel.component';
+import { LogComponent } from './log/log.component';
 
 
 
@@ -59,10 +62,12 @@ import { PurchaseViewModelComponent } from './purchaseviewmodel/purchaseviewmode
         SuppliersComponent,
         SubCategoryComponent,
         ProductsComponent,
+        ProductGroupComponent,
         WishListComponent,
         StocksComponent,
         CommentsComponent,
-        PurchaseViewModelComponent
+        PurchaseViewModelComponent,
+        LogComponent
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -90,10 +95,12 @@ import { PurchaseViewModelComponent } from './purchaseviewmodel/purchaseviewmode
             { path: 'suppliers', component: SuppliersComponent },
             { path: 'subcategory', component: SubCategoryComponent },
             { path: 'products', component: ProductsComponent },
+            { path: 'productgroup', component: ProductGroupComponent },
             { path: 'wishlist', component: WishListComponent },
             { path: 'stocks', component: StocksComponent },
             { path: 'comments', component: CommentsComponent },
             { path: 'purchase', component: PurchaseViewModelComponent },
+            { path: 'log', component: LogComponent },
             { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
         ])
     ],

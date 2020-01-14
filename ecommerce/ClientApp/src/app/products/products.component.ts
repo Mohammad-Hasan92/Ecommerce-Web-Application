@@ -13,6 +13,7 @@ export class ProductsComponent {
     public ProductsList: Products[];
     public SubCategoryList: SubCategory[];
     public BrandList: Brand[];
+    public ProductGroupList: ProductGroup[];
 
 
     public Http: HttpClient;
@@ -41,6 +42,7 @@ export class ProductsComponent {
             }, error => this.Toastr.errorToastr(error, "Error"));
         this.LoadSubCategoryList();
         this.LoadBrandList();
+        this.LoadProductGroupList();
 
     }
 
@@ -61,7 +63,13 @@ export class ProductsComponent {
             }, error => this.Toastr.errorToastr(error, "Error"));
     }
 
+    public LoadProductGroupList() {
 
+        this.Http.get<ProductGroup[]>(this.BaseUrl + 'api/ProductGroups')
+            .subscribe(result => {
+                this.ProductGroupList = result;
+            }, error => this.Toastr.errorToastr(error, "Error"));
+    }
 
     public Cancel(form: NgForm) {
 
@@ -101,6 +109,7 @@ export class ProductsComponent {
         formData.append('Image', this.Products.Image);
         formData.append('Upload', this.Products.Upload, this.Products.Upload.name);
         formData.append('SubCatId', this.Products.SubCatId.toString());
+        formData.append('GroupId', this.Products.GroupId.toString());
         formData.append('BrandId', this.Products.BrandId.toString());
 
 
@@ -179,9 +188,11 @@ class Products {
     public Image: string = "";
     public Upload: File;
     public SubCatId: number;
+    public GroupId: number;
     public BrandId: number;
     SubCategoryName: string;
     BrandName: string;
+    GroupName: string;
 
     //Sizes: number[];
     //SizesValue: string;
@@ -198,5 +209,10 @@ class SubCategory {
 class Brand {
     BrandId: number;
     BrandName: string;
+
+}
+class ProductGroup {
+    GroupId: number;
+    GroupName: string;
 
 }

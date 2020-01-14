@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http.Features;
+using System;
 
 namespace ecommerce
 {
@@ -43,6 +44,12 @@ namespace ecommerce
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            services.AddSession(opt =>
+            {
+                opt.IdleTimeout = TimeSpan.FromMinutes(5);
+            });
+
 
             //services.Configure<FormOptions>(o =>
             //{
@@ -92,6 +99,7 @@ namespace ecommerce
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseAuthorization();
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

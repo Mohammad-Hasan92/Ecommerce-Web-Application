@@ -30,7 +30,7 @@ namespace ecommerce.ApiControllers
         public async Task<ActionResult<IEnumerable<object>>> GetProducts()
         {
 
-            var ProductList = _context.Products.Select(r => new { r.ProductId, r.ProductName, r.SubCategory.SubCategoryName, r.Brand.BrandName, r.Image }).ToList();
+            var ProductList = _context.Products.Select(r => new { r.ProductId, r.ProductName, r.SubCategory.SubCategoryName, r.Brand.BrandName,r.ProductGroup.GroupName,r.Image }).ToList();
 
             return ProductList;
         }

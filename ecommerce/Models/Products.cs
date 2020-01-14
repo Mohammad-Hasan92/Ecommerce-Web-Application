@@ -21,6 +21,9 @@ namespace ecommerce.Models
         [Required]
         public string ProductName { get; set; }
 
+        [ForeignKey("ProductGroup")]
+        public int GroupId { get; set; }
+
         [ScaffoldColumn(false)]
         [DataType(DataType.ImageUrl)]
         public string Image { get; set; }
@@ -37,6 +40,7 @@ namespace ecommerce.Models
 
         public virtual SubCategory SubCategory { get; set; }
         public virtual Brand Brand { get; set; }
+        public virtual ProductGroup ProductGroup { get; set; }
 
         public virtual ICollection<Stocks> Stocks { get; set; }
         public virtual ICollection<ProductSizes> ProductSizes { get; set; }
