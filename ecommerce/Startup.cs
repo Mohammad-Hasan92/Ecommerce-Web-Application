@@ -49,7 +49,7 @@ namespace ecommerce
             {
                 opt.IdleTimeout = TimeSpan.FromMinutes(5);
             });
-
+            services.AddMvc();
 
             //services.Configure<FormOptions>(o =>
             //{

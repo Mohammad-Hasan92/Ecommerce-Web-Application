@@ -36,8 +36,8 @@
               <tbody>
                 <tr *ngFor="let c of CartVM.CartItems">
                   <td>{{ c.ProductName }}</td>
-                  <td>{{ c.Qty }}</td>
                   <td>{{ c.Price }}</td>
+                  <td>{{ c.Qty }}</td>
                   <td>{{ c.Amount }}</td>
                   <td>
                     <i class="fa fa-minus-square-o" style="font-size:36px;color:red;align-content:flex-start" (click)="RemoveFromCart(c)"></i>
@@ -55,7 +55,7 @@
           </div>
           <div class="modal-footer btn-group">
             <button type="button" class="btn btn-secondary" (click)="ClearCart()">Clear</button>
-            <button type="submit" class="btn btn-primary">CheckOut</button>
+            <button type="submit" class="btn btn-primary" (click)="CreateOrder()">CheckOut</button>
           </div>
         </div>
       </div>

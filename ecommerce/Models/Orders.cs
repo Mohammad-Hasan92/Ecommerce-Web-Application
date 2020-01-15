@@ -20,16 +20,6 @@ namespace ecommerce.Models
         public int CustomerId { get; set; }
 
         [DataType(DataType.Currency)]
-        [DisplayName("Grand Total")]
-        [Required]
-        public decimal GrandTotal { get; set; }
-
-        [DataType(DataType.Currency)]
-        [DisplayName("Discount")]
-
-        public decimal Discount { get; set; }
-
-        [DataType(DataType.Currency)]
         [DisplayName("Net Price")]
         [Required]
         public decimal NetPrice { get; set; }

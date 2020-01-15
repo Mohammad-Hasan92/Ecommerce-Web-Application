@@ -19,6 +19,8 @@ export class HomeComponent {
     public Toastr: ToastrManager;
     public Log: Log;
     public CartVM: CartVM = new CartVM();
+
+    public OrderViewModel: OrderViewModel = new OrderViewModel();
     
 
 
@@ -71,6 +73,7 @@ export class HomeComponent {
 
         newPrd.ProductId = p.ProductId;
         newPrd.Price = p.NetSellingPrice;
+        newPrd.ProductName = p.ProductName;
         newPrd.Qty = 1;
         //newPrd.Amount = newPrd.Price * newPrd.Qty;
 
@@ -90,6 +93,7 @@ export class HomeComponent {
 
         newPrd.ProductId = p.ProductId;
         newPrd.Price = p.NetSellingPrice;
+        newPrd.ProductName = p.ProductName;
         newPrd.Qty = 1;
         //newPrd.Amount = newPrd.Price * newPrd.Qty;
 
@@ -102,17 +106,16 @@ export class HomeComponent {
     }
 
 
-    //CreateOrder(form: NgForm, formData: FormData) {
+    CreateOrder() {
 
-    //    this.Http.post<SubCategory>(this.BaseUrl + 'api/Products', formData)
-    //        .subscribe(result => {
-    //            this.LoadList();
-    //            this.Cancel(form);
-    //            $('#ProductsModal').modal('hide');
-    //            this.Toastr.successToastr(result.SubCategoryName + ' create successfully', "Success");
+        this.Http.post<OrderViewModel>(this.BaseUrl + 'api/Order', this.CartVM)
+            .subscribe(result => {
+                this.LoadList();
+                $('#CartModal').modal('hide');
+                this.Toastr.successToastr(result.orders.CustomerId + ' create successfully', "Success");
 
-    //        }, error => this.Toastr.errorToastr(error, "Error"));
-    //}
+            }, error => this.Toastr.errorToastr(error, "Error"));
+    }
 
 
 
@@ -168,4 +171,34 @@ class CartItem {
     Qty: number = 0;
     Price: number = 0;
     Amount: number = 0;
+}
+
+class OrderViewModel {
+    public orders: Orders;
+    public OrdersDetails: OrdersDetails[];
+
+
+    constructor() {
+
+        this.orders = new Orders();
+        this.OrdersDetails = new Array<OrdersDetails>();
+    }
+}
+
+
+class OrdersDetails {
+    OrderDetailsId: number = 0;
+    OrdersId: number = 0;
+    ProductId: number = 0;
+    UnitPrice: number = 0;
+    Quantity: number = 0;
+    TotalPrice: number = 0;
+}
+
+class Orders{
+    OrderId: number = 0;
+    CustomerId: number = 0;
+    GrandTotal: number = 0;
+    Discount: number = 0;
+    NetPrice: number = 0;
 }

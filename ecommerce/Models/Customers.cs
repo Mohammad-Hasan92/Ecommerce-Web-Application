@@ -18,7 +18,11 @@ namespace ecommerce.Models
         [MaxLength(50)]
         [DisplayName("Customer Name")]
         [Required]
+
         public string CustomerName { get; set; }
+
+        [Required]
+        public string UserName { get; set; }
 
         [EmailAddress]
         [DisplayName("Customer Email")]
