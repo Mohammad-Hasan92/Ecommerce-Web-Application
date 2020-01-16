@@ -56,7 +56,7 @@ export class HomeComponent {
     }
 
 
-    ClearCart() {
+    public ClearCart() {
         this.Http.get<CartVM>(this.BaseUrl + 'api/Cart/ClearCart')
             .subscribe(result => {
                 this.CartVM = result;
@@ -110,9 +110,9 @@ export class HomeComponent {
 
         this.Http.post<OrderViewModel>(this.BaseUrl + 'api/Order', this.CartVM)
             .subscribe(result => {
-                this.LoadList();
+                this.LoadList(); 
                 $('#CartModal').modal('hide');
-                this.Toastr.successToastr(result.orders.CustomerId + ' create successfully', "Success");
+                this.Toastr.successToastr('Order take successfully', "Success");
 
             }, error => this.Toastr.errorToastr(error, "Error"));
     }
