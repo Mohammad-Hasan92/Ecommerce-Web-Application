@@ -1,0 +1,159 @@
+<h1 id="tableLabel">Log Index</h1>
+
+
+
+<p *ngIf="!LogList"><em class="text-info">Loading...</em></p>
+
+<div class="btn-group">
+  <button class="btn btn-primary" (click)="LoadList()">
+    Refresh
+  </button>
+
+  <button type="button" data-toggle="modal" data-target="#CategoryModal" class="btn btn-success">
+    Create New
+  </button>
+  <button type="button" [useExistingCss]="true" styleSheetFile="style.css" class="btn btn-info" printSectionId="print-section"  ngxPrint>
+  Print
+  </button>
+</div>
+
+
+<div id="print-section">
+  <table id="" class="table table-striped table-bordered dt-responsive nowrap" aria-labelledby="tableLabel" *ngIf="LogList">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Product</th>
+        <th>Size</th>
+        <th>Buying Price</th>
+        <th>Profit Percantage</th>
+        <th>Selling Price</th>
+        <th>Discount</th>
+        <th>Net Selling Price</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of LogList | paginate: {itemsPerPage: 10, currentPage: p}">
+        <td>{{ p.LogId }}</td>
+        <td>{{ p.ProductName }}</td>
+        <td>{{ p.SizeValue }}</td>
+        <td>{{ p.BuyingPrice }}</td>
+        <td>{{ p.ProfitPercantage }}</td>
+        <td>{{ p.SellingPrice }}</td>
+        <td>{{ p.Discount }}</td>
+        <td>{{ p.NetSellingPrice }}</td>
+        <td class="btn-group">
+          <button class="btn btn-primary" (click)="GetLog(p.LogId)">Edit</button>
+          <button class="btn btn-danger" (click)="DeleteConfirmation(p)">Delete</button>
+        </td>
+      </tr>
+      <tr *ngIf="LogList.Count == 0">
+        <th colspan="4" class="text-center text-warning">No data available</th>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="8" class="text-right">
+          <pagination-controls (pageChange)="p =$event"></pagination-controls>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="CategoryModal" tabindex="-1" role="dialog" aria-labelledby="CategoryModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form class="modal-content" #form="ngForm" (ngSubmit)="form.form.valid && SubmitLog(form)" autocomplete="off" enctype="multipart/form-data">
+      <div class="modal-header">
+        <h5 class="modal-title" id="CategoryModalLabel">New Log</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="form-group">
+        <label>Product</label>
+        <select class=" form-control" [(ngModel)]="Log.StockId" name="StockId"
+                #StockId="ngModel" [ngClass]="{ 'is-invalid': form.submitted && StockId.invalid }" required>
+
+          <option value="undefined">
+            Please select Value
+          </option>
+          <option *ngFor="let Stocks of StocksList" [ngValue]="Stocks.StockId">
+            {{Stocks.ProductName}}
+          </option>
+        </select>
+
+      </div>
+      <div class="modal-body">
+        <input type="hidden" [(ngModel)]="Log.LogId" name="LogId"
+               #LogId="ngModel" />
+
+        <div class="form-group">
+          <label>Buying Price</label>
+          <input type="number" class=" form-control" [(ngModel)]="Log.BuyingPrice" name="BuyingPrice"
+                 #BuyingPrice="ngModel" [ngClass]="{ 'is-invalid': form.submitted &&  BuyingPrice.invalid }" required />
+        </div>
+
+
+
+        <div class="form-group">
+          <label>Profit Percantage</label>
+          <input type="number" class=" form-control" [(ngModel)]="Log.ProfitPercantage" name="ProfitPercantage"
+                 #ProfitPercantage="ngModel" [ngClass]="{ 'is-invalid': form.submitted &&  ProfitPercantage.invalid }" required />
+        </div>
+
+        <div class="form-group">
+          <label>Selling Price</label>
+          <input type="number" class=" form-control" [(ngModel)]="Log.SellingPrice" name="SellingPrice"
+                 #SellingPrice="ngModel" [ngClass]="{ 'is-invalid': form.submitted &&  SellingPrice.invalid }" required />
+        </div>
+
+        <div class="form-group">
+          <label>Discount</label>
+          <input type="number" class=" form-control" [(ngModel)]="Log.Discount" name="Discount"
+                 #Discount="ngModel" [ngClass]="{ 'is-invalid': form.submitted &&  Discount.invalid }" required />
+        </div>
+
+        <!--<div class="form-group">
+      <label>Net Selling Price</label>
+      <input type="text" class=" form-control" [(ngModel)]="Log.NetSellingPrice" name="NetSellingPrice"
+             #NetSellingPrice="ngModel" [ngClass]="{ 'is-invalid': form.submitted &&  NetSellingPrice.invalid }" required />
+    </div>-->
+
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="Cancel(form)">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="CategoryModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="CategoryModalLabel">Confirm delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <span class="h2 text-warning">Delete {{Log.LogId}}?</span>
+      </div>
+      <div class="modal-footer btn-group">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary" (click)="DeleteLog(Log.LogId)">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
