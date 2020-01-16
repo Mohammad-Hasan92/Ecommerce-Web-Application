@@ -59,6 +59,7 @@
                   <th>Product</th>
                   <th>Price</th>
                   <th>Qty.</th>
+                  <th>Size</th>
                   <th>Amount</th>
                   <th>Action</th>
                 </tr>
@@ -68,6 +69,7 @@
                   <td>{{ c.ProductName }}</td>
                   <td>{{ c.Price }}</td>
                   <td>{{ c.Qty }}</td>
+                  <td>{{ c.SizeValue }}</td>
                   <td>{{ c.Amount }}</td>
                   <td>
                     <i class="fa fa-minus-square-o" style="font-size:36px;color:red;align-content:flex-start" (click)="RemoveFromCart(c)"></i>
@@ -114,6 +116,7 @@
                     <th>Product</th>
                     <th>Price</th>
                     <th>Qty.</th>
+                    <th>Size</th>
                     <th>Amount</th>
                   </tr>
                 </thead>
@@ -122,6 +125,7 @@
                     <td>{{ c.ProductName }}</td>
                     <td>{{ c.Price }}</td>
                     <td>{{ c.Qty }}</td>
+                    <td>{{ c.SizeValue }}</td>
                     <td>{{ c.Amount }}</td>
                   </tr>
                 </tbody>
@@ -175,8 +179,10 @@
       </div>
       <div class="card-footer btn-group">
         <span class="text-info">Discount : {{ p.Discount }}</span>
-        <span class="col-1"></span> 
+        <span class="col-1"></span>
         <span style="color:red">Now : {{ p.NetSellingPrice }}</span>
+        <span class="col-1"></span>
+        <span style="color:red">Size : {{ p.SizeValue }}</span>
       </div>
     </div>
 

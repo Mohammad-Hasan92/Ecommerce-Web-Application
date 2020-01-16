@@ -128,6 +128,7 @@ export class HomeComponent {
 class Log {
     LogId: number = 0;
     ProductName: string;
+    SizeValue: string;
     public Image: string = "";
     public SellingPrice: number;
     public Discount: number;
@@ -171,6 +172,7 @@ class CartItem {
     Qty: number = 0;
     Price: number = 0;
     Amount: number = 0;
+    SizeValue: string;
 }
 
 class OrderViewModel {
