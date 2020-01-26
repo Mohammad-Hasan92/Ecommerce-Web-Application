@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http.Features;
 using System;
+using System.Security.Claims;
 
 namespace ecommerce
 {
@@ -35,15 +36,49 @@ namespace ecommerce
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
+            //services.AddDefaultIdentity<ApplicationUser>()
+            //    //.AddRoles<ApplicationRole>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddDefaultIdentity<ApplicationUser>()
-                //.AddRoles<ApplicationRole>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            //services.AddIdentity<ApplicationUser, IdentityRole>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+
+
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(
+                opt =>
+                {
+                    opt.ApiResources[0].UserClaims.Add("role");
+                    //opt.ApiResources["ecommerceAPI"].UserClaims.Add("role");
+                    //opt.ApiResources["ecommerceAPI"].UserClaims.Add(ClaimTypes.Role);
+                });
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            services.AddAuthorization(opt =>
+            {
+                //opt.AddPolicy("Admin", policy => policy.RequireClaim("role", "Administrator"));
+                //opt.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "Administrator"));
+                //opt.AddPolicy("Admin", policy => policy.RequireRole("Administrator"));
+
+                opt.AddPolicy("Admin", policy => {
+                    policy.RequireClaim("role", "Admin");
+                    //policy.RequireRole("admin");
+                });
+
+
+            });
+
+
+
+
 
             services.AddSession(opt =>
             {
@@ -121,5 +156,23 @@ namespace ecommerce
                 }
             });
         }
+
+        //private async void AddAdminInistrator(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        //{
+        //    ApplicationUser user = new ApplicationUser() { 
+        //    UserName = "admin@idb.com",
+        //    Email = "admin@idb.com"
+        //    };
+
+        //    IdentityRole role = new IdentityRole("Administrator");
+
+
+        //    await userManager.CreateAsync(user, "123456_Az");
+        //    await roleManager.CreateAsync(role);
+        //    await userManager.AddToRoleAsync(user, role.Name);
+
+        //}
+
+
     }
 }

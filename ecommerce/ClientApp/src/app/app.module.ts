@@ -42,6 +42,7 @@ import {MatInputModule} from '@angular/material/input';
 import { MaterialModule } from './material/material.component';
 import { PurchaseViewModelComponent } from './purchaseviewmodel/purchaseviewmodel.component';
 import { LogComponent } from './log/log.component';
+import { RoleManager } from './rolemanager/rolemanager.component';
 
 
 
@@ -67,7 +68,8 @@ import { LogComponent } from './log/log.component';
         StocksComponent,
         CommentsComponent,
         PurchaseViewModelComponent,
-        LogComponent
+        LogComponent,
+        RoleManager
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -87,21 +89,22 @@ import { LogComponent } from './log/log.component';
         ToastrModule.forRoot(),
         RouterModule.forRoot([
             { path: '', component: HomeComponent, pathMatch: 'full' },
-            { path: 'counter', component: CounterComponent },
-            { path: 'brand', component: BrandComponent },
-            { path: 'customer', component: CustomerComponent },
-            { path: 'sizes', component: SizesComponent },
-            { path: 'category', component: CategoryComponent },
-            { path: 'suppliers', component: SuppliersComponent },
-            { path: 'subcategory', component: SubCategoryComponent },
-            { path: 'products', component: ProductsComponent },
-            { path: 'productgroup', component: ProductGroupComponent },
-            { path: 'wishlist', component: WishListComponent },
-            { path: 'stocks', component: StocksComponent },
-            { path: 'comments', component: CommentsComponent },
-            { path: 'purchase', component: PurchaseViewModelComponent },
+            { path: 'counter', component: CounterComponent, canActivate: [AuthorizeGuard]},
+            { path: 'brand', component: BrandComponent, canActivate: [AuthorizeGuard]},
+            { path: 'customer', component: CustomerComponent, canActivate: [AuthorizeGuard] },
+            { path: 'sizes', component: SizesComponent, canActivate: [AuthorizeGuard]},
+            { path: 'category', component: CategoryComponent, canActivate: [AuthorizeGuard] },
+            { path: 'suppliers', component: SuppliersComponent, canActivate: [AuthorizeGuard] },
+            { path: 'subcategory', component: SubCategoryComponent, canActivate: [AuthorizeGuard] },
+            { path: 'products', component: ProductsComponent, canActivate: [AuthorizeGuard] },
+            { path: 'productgroup', component: ProductGroupComponent, canActivate: [AuthorizeGuard] },
+            { path: 'wishlist', component: WishListComponent, canActivate: [AuthorizeGuard] },
+            { path: 'stocks', component: StocksComponent, canActivate: [AuthorizeGuard]},
+            { path: 'comments', component: CommentsComponent, canActivate: [AuthorizeGuard] },
+            { path: 'purchase', component: PurchaseViewModelComponent, canActivate: [AuthorizeGuard] },
             { path: 'log', component: LogComponent },
             { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
+            { path: 'rolemanager', component: RoleManager, canActivate: [AuthorizeGuard] },
         ])
     ],
     providers: [

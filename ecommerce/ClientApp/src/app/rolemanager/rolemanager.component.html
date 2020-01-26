@@ -1,0 +1,73 @@
+<h1 id="tableLabel">Role Index</h1>
+
+
+
+<p *ngIf="!RoleList"><em class="text-info">Loading...</em></p>
+
+
+<div class="btn-group">
+  <button (click)="LoadList()">
+    Refresh
+  </button>
+
+  <button type="button" data-toggle="modal" data-target="#roleModal" class="btn btn-success">
+    Create New
+  </button>
+</div>
+
+<div id="print-section">
+
+
+  <table class="table table-striped table-bordered dt-responsive nowrap" aria-labelledby="tableLabel" *ngIf="RoleList">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of RoleList ">
+        <td>{{ p.Id }}</td>
+        <td>{{ p.Name }}</td>
+        <td class="btn-group">
+        </td>
+      </tr>
+      <tr *ngIf="RoleList.Count == 0">
+        <th colspan="4" class="text-center text-warning">No data available</th>
+      </tr>
+    </tbody>
+    
+  </table>
+
+</div>
+<!-- Modal -->
+<div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="RoleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form class="modal-content" #form="ngForm" (ngSubmit)="form.form.valid && SubmitRole(form)" autocomplete="off" >
+      <div class="modal-header">
+        <h5 class="modal-title" id="RoleModalLabel">New Role</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" [(ngModel)]="Role.Id" name="Id" #Id="ngModel" />
+
+        <div class="form-group">
+          <label>Role Name</label>
+          <input type="text" class=" form-control" [(ngModel)]="Role.Name" name="Name"
+                 #Name="ngModel" [ngClass]="{ 'is-invalid': form.submitted &&  Name.invalid }" required />
+
+          <span *ngIf="{ 'is-invalid': form.submitted &&  Name.invalid }">Role Name required</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+

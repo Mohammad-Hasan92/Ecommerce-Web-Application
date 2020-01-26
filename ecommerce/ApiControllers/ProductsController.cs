@@ -9,11 +9,13 @@ using ecommerce.Data;
 using ecommerce.Models;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ecommerce.ApiControllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class ProductsController : ControllerBase
     {
         private readonly EcommerceContext _context;
@@ -27,6 +29,7 @@ namespace ecommerce.ApiControllers
 
         // GET: api/Products
         [HttpGet]
+        //[Authorize(Policy = "Admin")]
         public async Task<ActionResult<IEnumerable<object>>> GetProducts()
         {
 
